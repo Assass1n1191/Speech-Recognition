@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
 
     public float movementSpeed = 2.4f;
 
+    public delegate void OnSpeechEvent(Letter currentLetter);
+    public event OnSpeechEvent onSpeechEvent;
+
     private void Awake()
     {
         Instance = this;
@@ -28,4 +31,25 @@ public class Player : MonoBehaviour
     {
         transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
 	}
+
+    private void OnTriggerEnter(Collider col)
+    {
+
+        if (col.tag.Equals("Letter"))
+        {
+            if (col is BoxCollider) //Starting listen
+            {
+                if (onSpeechEvent != null)
+                    onSpeechEvent(col.gameObject.GetComponent<Letter>());
+            }
+
+            if (col is CapsuleCollider) //Last point
+            {
+                GameController.Instance.StopListen();
+            }
+
+
+            //GameController.Instance.OnSpeechEvent(col.gameObject.GetComponent<Letter>());
+        }
+    }
 }

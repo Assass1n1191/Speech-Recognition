@@ -11,7 +11,7 @@ public class SpeechRecognizerDemoSceneManager : MonoBehaviour
 	
 	void Start ()
 	{
-		if (Application.platform != RuntimePlatform.Android) {
+        if (Application.platform != RuntimePlatform.Android) {
 			Debug.Log ("Speech recognition is only available on Android platform.");
 			return;
 		}
